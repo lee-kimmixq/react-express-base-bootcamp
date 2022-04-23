@@ -15,7 +15,9 @@ export default function Form({ links, setLinks }) {
 
   const saveLink = () => {
     const currentLinks = [...links];
-    currentLinks.push({ name: newName, link: newLink });
+    currentLinks.push({
+      id: currentLinks.length, name: newName, link: newLink, done: false,
+    });
 
     setLinks(currentLinks);
     setNewLink('');

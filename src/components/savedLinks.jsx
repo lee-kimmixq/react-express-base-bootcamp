@@ -1,23 +1,23 @@
 import React from 'react';
 
 export default function SavedLinks({
-  links, readLinks, setReadLinks,
+  links, setLinks,
 }) {
   const handleLinkRead = (event) => {
     const idxLinkToChange = event.target.value;
 
-    const currentReadLinks = [...readLinks];
-    currentReadLinks.push(idxLinkToChange);
+    const currentLinks = [...links];
+    currentLinks[idxLinkToChange].done = true;
 
-    setReadLinks(currentReadLinks);
+    setLinks(currentLinks);
   };
 
-  const linkList = links.map(({ name, link }, idx) => (
+  const linkList = links.filter(({ done }) => !done).map(({ id, name, link }) => (
     <div key={name}>
-      <input type="checkbox" onChange={handleLinkRead} name={`link-${idx}`} value={idx} />
-      <label htmlFor={`link-${idx}`}><a href={link}>{name}</a></label>
+      <input type="checkbox" onChange={handleLinkRead} name={`link-${id}`} value={id} />
+      <label htmlFor={`link-${id}`}><a href={link}>{name}</a></label>
     </div>
-  )).filter((_, index) => !readLinks.includes(`${index}`));
+  ));
 
   return <div>{linkList}</div>;
 }
