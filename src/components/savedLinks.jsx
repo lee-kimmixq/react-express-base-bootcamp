@@ -4,12 +4,11 @@ export default function SavedLinks({
   links, setLinks,
 }) {
   const handleLinkRead = (event) => {
-    const idxLinkToChange = event.target.value;
-
-    const currentLinks = [...links];
-    currentLinks[idxLinkToChange].done = true;
-
-    setLinks(currentLinks);
+    const newLinks = links.map((link) => {
+      if (link.id === Number(event.target.value)) return { ...link, done: true };
+      return link;
+    });
+    setLinks(newLinks);
   };
 
   const linkList = links.filter(({ done }) => !done).map(({ id, name, link }) => (

@@ -5,7 +5,7 @@ export default function Form({ links, setLinks }) {
   const [newLink, setNewLink] = useState('');
   const [newName, setNewName] = useState('');
 
-  const handleChange = (event) => {
+  const handleLinkChange = (event) => {
     setNewLink(event.target.value);
   };
 
@@ -14,12 +14,9 @@ export default function Form({ links, setLinks }) {
   };
 
   const saveLink = () => {
-    const currentLinks = [...links];
-    currentLinks.push({
-      id: currentLinks.length, name: newName, link: newLink, done: false,
-    });
-
-    setLinks(currentLinks);
+    setLinks([...links, {
+      id: links.length, name: newName, link: newLink, done: false,
+    }]);
     setNewLink('');
     setNewName('');
   };
@@ -27,7 +24,7 @@ export default function Form({ links, setLinks }) {
   return (
     <form>
       <input type="url" onChange={handleNameChange} placeholder="Name" value={newName} />
-      <input type="url" onChange={handleChange} placeholder="Link To Save" value={newLink} />
+      <input type="url" onChange={handleLinkChange} placeholder="Link To Save" value={newLink} />
       <button type="submit" onClick={saveLink} disabled={!validUrl.isUri(newLink)}>Save</button>
     </form>
   );
